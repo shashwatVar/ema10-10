@@ -54,7 +54,7 @@ func (p *Processor) fetchCandles(securityID string, exchangeSegment string, inst
 		"exchangeSegment": exchangeSegment,
 		"instrument":      instrument,
 		"interval":        "1",                                               // 5-minute candles
-		"fromDate":        time.Now().AddDate(0, 0, -5).Format("2006-01-02"), // 4 days before today
+		"fromDate":        time.Now().Format("2006-01-02"),
 		"toDate":          time.Now().Format("2006-01-02"),                   // today
 	}
 	token := p.state.AdminToken
