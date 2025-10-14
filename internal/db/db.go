@@ -55,7 +55,7 @@ var FetchAllClients = func() ([]*Ema10_10ClientDetails, error) {
 	query := `
 		SELECT 
 			ec.id, ec.client_id, ec.fix_lots, ec.allowed_loss, ec.is_active, ec.lots, ec.max_lots, ec.round_up_lg,
-			c.name, c.token, c.is_admin, c.client_id
+			c.name, c.token, c.is_admin, c.client_id, c.proxy_url
 		FROM 
 			ema10_10_clients ec
 		JOIN 
@@ -83,6 +83,7 @@ var FetchAllClients = func() ([]*Ema10_10ClientDetails, error) {
 			&client.Token,
 			&client.IsAdmin,
 			&client.ClientID,
+			&client.ProxyURL,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("error scanning client: %w", err)

@@ -66,6 +66,7 @@ type Order struct {
 	Token           string  `json:"token"`
 	IsHedge         bool    `json:"isHedge,omitempty"`
 	IsCompleted     bool    `json:"isCompleted,omitempty"`
+	ProxyURL        string  `json:"proxyURL"`
 }
 
 type OrderParams struct {
@@ -412,11 +413,11 @@ func (p *Processor) StartPolling() {
 func (p *Processor) timeUntilNextTenMinMark() time.Duration {
 	now := time.Now()
 	nextTenMin := now.Truncate(10 * time.Minute).Add(4 * time.Minute).Add(55 * time.Second)
-	
+
 	if nextTenMin.Before(now) {
 		nextTenMin = nextTenMin.Add(10 * time.Minute)
 	}
-	
+
 	return nextTenMin.Sub(now)
 }
 

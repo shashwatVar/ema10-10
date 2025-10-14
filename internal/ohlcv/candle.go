@@ -53,9 +53,9 @@ func (p *Processor) fetchCandles(securityID string, exchangeSegment string, inst
 		"securityId":      securityID,
 		"exchangeSegment": exchangeSegment,
 		"instrument":      instrument,
-		"interval":        "1",                                               // 5-minute candles
+		"interval":        "1", // 5-minute candles
 		"fromDate":        time.Now().Format("2006-01-02"),
-		"toDate":          time.Now().Format("2006-01-02"),                   // today
+		"toDate":          time.Now().Format("2006-01-02"), // today
 	}
 	token := p.state.AdminToken
 	p.state.mutex.RUnlock()

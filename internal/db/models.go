@@ -30,6 +30,7 @@ type Ema10_10ClientDetails struct {
 	Token    string `db:"token"`
 	IsAdmin  bool   `db:"is_admin"`
 	ClientID string `db:"client_id"` // String client ID from clients table
+	ProxyURL string `db:"proxy_url"`
 }
 
 type MarketData struct {

@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"math"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"sync"
@@ -170,6 +171,7 @@ func (p *Processor) calculateOrderDetails(optionObservation *OptionObservation, 
 				Price:           0,
 				Token:           client.Token,
 				IsHedge:         false,
+				ProxyURL:        client.ProxyURL,
 			})
 		}
 
@@ -186,6 +188,7 @@ func (p *Processor) calculateOrderDetails(optionObservation *OptionObservation, 
 				Price:           0,
 				Token:           client.Token,
 				IsHedge:         true,
+				ProxyURL:        client.ProxyURL,
 			})
 		}
 
@@ -247,9 +250,12 @@ func (p *Processor) placeOrderWithRetry(order Order) error {
 }
 
 func (p *Processor) placeOrder(order Order) error {
-	url := "https://api.dhan.co/v2/orders"
+	proxyURL, _ := url.Parse(order.ProxyURL)
 
-	// Create a new struct without the isHedge field
+	transport := &http.Transport{Proxy: http.ProxyURL(proxyURL)}
+	client := &http.Client{Transport: transport}
+
+	url := "https://api.dhan.co/v2/orders"
 	orderPayload := struct {
 		DhanClientID    string `json:"dhanClientId"`
 		TransactionType string `json:"transactionType"`
@@ -294,7 +300,7 @@ func (p *Processor) placeOrder(order Order) error {
 		"body":    string(jsonPayload),
 	}).Info("Placing order")
 
-	resp, err := p.httpClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return logger.Log.ErrorWithReturn("error making request: %v", err)
 	}
