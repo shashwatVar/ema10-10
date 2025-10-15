@@ -5,7 +5,6 @@ import (
 	"ema10-10/internal/logger"
 	"ema10-10/internal/utils"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -108,16 +107,12 @@ func (p *Processor) fetchCandles(securityID string, exchangeSegment string, inst
 		})
 	}
 
-	fmt.Println(newCandles)
-
 	aggregatedCandles := []Candle{}
 	for i := 0; i < len(newCandles); i += 10 {
 		aggregateCandles := newCandles[i : i+10]
 		aggregatedCandle := p.aggregateCandles(aggregateCandles)
 		aggregatedCandles = append(aggregatedCandles, aggregatedCandle)
 	}
-
-	fmt.Println(aggregatedCandles)
 
 	currentCandle := aggregatedCandles[len(aggregatedCandles)-1]
 
