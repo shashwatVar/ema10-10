@@ -11,6 +11,7 @@ type Client struct {
 	Token     string    `db:"token"`
 	IsAdmin   bool      `db:"is_admin"`
 	CreatedAt time.Time `db:"created_at"`
+	ProxyURL  string    `db:"proxy_url"`
 }
 
 type Ema10_10Clients struct {

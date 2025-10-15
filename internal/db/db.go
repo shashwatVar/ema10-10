@@ -43,6 +43,7 @@ var FetchAdminClient = func() (*Client, error) {
 		&client.Token,
 		&client.IsAdmin,
 		&client.CreatedAt,
+		&client.ProxyURL,
 	)
 	if err != nil {
 		return nil, logger.Log.ErrorWithReturnWrap(err, "Could not fetch admin client")
