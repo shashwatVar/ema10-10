@@ -632,8 +632,9 @@ func (p *Processor) checkOptionTrigger(optionType string, observedOption *Option
 
 func (p *Processor) checkForTriggerFormation(currentCandle Candle, ema10 float64) bool {
 	midPt := (currentCandle.High + currentCandle.Low) / 2
+	candleRange := math.Abs(currentCandle.High - currentCandle.Low)
 
-	if (currentCandle.Close < ema10) && (midPt > currentCandle.Close) && (midPt > currentCandle.Open) {
+	if (currentCandle.Close < ema10) && (midPt > currentCandle.Close) && (midPt > currentCandle.Open) && (candleRange > 9) && (candleRange < 50) {
 		return true
 	}
 
